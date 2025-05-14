@@ -1,3 +1,7 @@
+⚠️ℹ️ LOOKING FOR NEW MAINTAINER! ⚠️ℹ️ 
+
+To be blunt: *I don't care about this project anymore. At all. I have no interest or desire to maintain it.* But, I totally get it if you're somebody still getting something out of it. If you'd like to take over this project, drop a line. It's yours!
+
 # prisma-case-format
 
 `prisma introspect` names its model 1:1 with your database's conventions. Most of the time that is probably fine, however you may want or need different conventions in the generated client library. `prisma-case-format` makes it simple and direct to get the case conventions you want, applied across an entire `schema.prisma` with optional overrides per `model` or `field`.
