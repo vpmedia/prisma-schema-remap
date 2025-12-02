@@ -1,0 +1,40 @@
+# Copyright (c) 2025-present VPMedia
+# author: Andras Csizmadia <andras@vpmedia.hu>
+
+name: Check
+
+permissions:
+  contents: read
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        node-version: [24.X]
+    steps:
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
+          run_install: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: pnpm
+      - name: Audit
+        run: pnpm audit
+      - name: Init
+        run: pnpm install --frozen-lockfile
+      # - name: Lint
+      #   run: pnpm lint
+      - name: Test
+        run: pnpm test
+      - name: Build
+        run: pnpm build
+      - name: Run
+        run: pnpm cli --help
