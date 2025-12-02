@@ -1,0 +1,65 @@
+## [1.1.0] - 2025-12-02
+
+### 🚀 Features
+
+- Enum case migration
+- Pluralize
+- *(idempotency)* Introduce support for multiple subsequent runs of tool to ensure continuing convention adherence
+- Support mapping views
+- Allow cross-pluralized tables
+- Allow cross-singularized tables
+- Allow support for complex index semantics
+- Model-wise convention controls
+- Enable case-convention deviations
+- Initial fork commit
+
+### 🐛 Bug Fixes
+
+- Repair map annotation drops
+- Relations with names no longer break output
+- Reshape enum field type & mapping
+- Add enum model mapping annotations
+- Support 'the Unsupported type in field mapping
+- Enums should support --map-table-case too
+- Broken readme demo
+- *(convention-store)* Make sure that the whole name is matched not just a fragment of it
+- Support for plurality control in config file
+- Fixed tsc build errors, tidy up tsconfig.json
+
+### 💼 Other
+
+- Reshape enum case conventions
+- Drop beta tag
+- Committed pnpm lock file
+- Fixed tsc build errors
+- Improve ci github workflow, improve lint/test/format commands
+- *(deps)* Cleanup dependencies
+
+### 📚 Documentation
+
+- Amend readme
+- Update description
+- Add public repo url
+- Update readme
+- Update readme again
+- Documentation for map-annotation idempotency
+- Minor docs tweaks
+
+### 🧪 Testing
+
+- Unit test for issue
+- Failing tests for map-annotation idempotency
+- Updated snapshots
+
+### ⚙️ Miscellaneous Tasks
+
+- Update version
+- Fix dependency graph
+- Forgot to submit bin in previous tarball for v1.3.0
+- Vers bump
+- Version bump
+- Add license
+- Integrated eslint, prettier, lefthook
+- Added publish workflow
+- Set version to 1.0.0
+- *(release)* V1.1.0
