@@ -3,7 +3,7 @@
   "version": "1.0.0-alpha1",
   "description": "Give your introspected schema.prisma sane casing conventions",
   "main": "./dist/cli.js",
-  "type": "module",
+  "type": "commonjs",
   "repository": {
     "type": "git",
     "url": "https://github.com/vpmedia/prisma-schema-remap.git"
