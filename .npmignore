@@ -9,6 +9,7 @@ coverage/
 eslint.config.ts
 lefthook.yml
 pnpm-lock.yaml
+pnpm-workspace.yaml
 prettier.config.mjs
 schema.prisma
 src/
