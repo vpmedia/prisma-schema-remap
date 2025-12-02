@@ -203,9 +203,9 @@ test('it can enforce a specified case convention on views', async () => {
     pluralize: true,
   });
   const file_contents = getFixture('views');
-  let [schema, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
+  const [schema, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
   expect(err).toBeFalsy();
-  let new_schema = await formatSchema(schema!);
+  const new_schema = await formatSchema(schema!);
   expect(new_schema).toMatchSnapshot();
 });
 

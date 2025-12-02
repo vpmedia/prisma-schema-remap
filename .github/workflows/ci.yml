@@ -41,6 +41,8 @@ jobs:
         run: pnpm test
       - name: Build
         run: pnpm build
+      - name: Run
+        run: pnpm cli --help
       - name: Calculate workflow duration
         id: workflow_duration
         env:

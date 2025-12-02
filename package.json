@@ -13,6 +13,7 @@
   },
   "scripts": {
     "build": "tsc",
+    "cli": "node ./bin/cli.js",
     "format": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json,css}\"",
     "lint": "eslint",
     "test": "vitest"
