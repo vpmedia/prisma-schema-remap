@@ -3,13 +3,13 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { Command, OptionValues } from 'commander';
 import chalk from 'chalk';
-import { formatSchema } from '@prisma/internals';
+import { formatSchema } from './schema';
 import { ConventionTransformer } from './convention-transformer';
 import { ConventionStore, DEFAULT_PRISMA_CASE_FORMAT_FILE_LOCATION, SUPPORTED_CASE_CONVENTIONS_MESSAGE, tryGetTableCaseConvention } from './convention-store';
 import { resolve } from 'path';
 
 const DEFAULT_FILE_LOCATION = 'schema.prisma';
-const program = new Command(`prisma-case-format`);
+const program = new Command(`prisma-schema-remap`);
 
 const VERSION = require('../package.json').version;
 
@@ -17,7 +17,7 @@ program
   .description(`Give your schema.prisma sane naming conventions`)
   .addHelpText('after', SUPPORTED_CASE_CONVENTIONS_MESSAGE)
   .requiredOption('-f, --file <file>', 'cwd-relative path to `schema.prisma` file', DEFAULT_FILE_LOCATION)
-  .option('-c, --config-file <cfgFile>', 'cwd-relative path to `.prisma-case-format` config file', DEFAULT_PRISMA_CASE_FORMAT_FILE_LOCATION)
+  .option('-c, --config-file <cfgFile>', 'cwd-relative path to `.prisma-schema-remap` config file', DEFAULT_PRISMA_CASE_FORMAT_FILE_LOCATION)
   .option('-D, --dry-run', 'print changes to console, rather than back to file', false)
   .option('--table-case <tableCase>', 'case convention for table names (SEE BOTTOM)', 'pascal')
   .option('--field-case <fieldCase>', 'case convention for field names', 'camel')
@@ -132,13 +132,13 @@ async function run() {
     process.exit(1);
   }
 
-  const new_schema = await formatSchema({ schema: schema! });
+  const new_schema = await formatSchema(schema!);
 
   if (options.dryRun) {
     console.log(new_schema);
     process.exit(0);
   }
-  writeFileSync(options.file, Buffer.from(new_schema), { encoding: 'utf8' });
+  writeFileSync(options.file, new_schema, { encoding: 'utf8' });
   console.log(chalk.blue('✨ Done.'));
 }
 

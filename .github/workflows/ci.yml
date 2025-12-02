@@ -1,0 +1,72 @@
+# Copyright (c) 2025-present VPMedia
+# author: Andras Csizmadia <andras@vpmedia.hu>
+
+name: Continuous Integration
+
+permissions:
+  contents: read
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        node-version: [24.X]
+    steps:
+      - name: Set start timestamp
+        id: start_timestamp
+        run: echo "timestamp=$EPOCHSECONDS" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v6
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
+          run_install: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: pnpm
+      - name: Audit
+        run: pnpm audit
+      - name: Init
+        run: pnpm install --frozen-lockfile
+      - name: Lint
+        run: pnpm run lint
+      - name: Test
+        run: pnpm run test
+      - name: Calculate workflow duration
+        id: workflow_duration
+        env:
+          START_TIMESTAMP: ${{ steps.start_timestamp.outputs.timestamp }}
+        run: echo "timedelta=$((EPOCHSECONDS - START_TIMESTAMP))" >> "$GITHUB_OUTPUT"
+        if: always()
+      - uses: slackapi/slack-github-action@v2
+        with:
+          errors: true
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
+          payload: >
+            {
+              "channel": "dev-github",
+              "text": " ",
+              "attachments": [
+                {
+                  "fallback": "${{ github.repository }} - ${{ github.workflow }} workflow status",
+                  "color": "${{ job.status == 'success' && 'good' || job.status == 'failure' && 'danger' || 'warning' }}",
+                  "title": "${{ github.workflow }} workflow",
+                  "title_link": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                  "pretext": "*${{ github.repository }}*",
+                  "text": "*Status:* ${{ job.status }}\n*Branch:* ${{ github.base_ref || github.ref_name }}\n*Commit:* <${{ github.event.head_commit.url || github.event.pull_request.html_url }}|View Commit>",
+                  "footer": "Committed by ${{ github.event.head_commit.author.name || github.actor }} | Completed in ${{ steps.workflow_duration.outputs.timedelta }}s",
+                  "footer_icon": "https://avatars.githubusercontent.com/${{ github.event.head_commit.author.username || github.actor }}"
+                }
+              ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        if: always()

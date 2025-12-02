@@ -78,7 +78,7 @@ export type ConventionFile = {
   override?: Record<string, ModelConvention>;
 };
 
-export const DEFAULT_PRISMA_CASE_FORMAT_FILE_LOCATION = '.prisma-case-format';
+export const DEFAULT_PRISMA_CASE_FORMAT_FILE_LOCATION = '.prisma-schema-remap';
 
 export class ConventionStore {
   public static fromFile(path: string, usesNextAuth?: boolean): [ConventionStore?, Error?] {

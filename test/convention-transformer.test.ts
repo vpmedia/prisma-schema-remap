@@ -2,9 +2,9 @@ import { readFileSync } from 'fs';
 
 import { join } from 'path';
 
-import { camelCase, pascalCase, snakeCase } from 'change-case';
+import * as changeCase from 'change-case';
 import { CaseChange, ConventionTransformer } from '../src/convention-transformer';
-import { formatSchema } from '@prisma/internals';
+import { formatSchema } from '../src/schema';
 
 import { asPluralized, asSingularized } from '../src/caseConventions';
 import { ConventionStore, defaultConventions } from '../src/convention-store';
@@ -23,20 +23,20 @@ test('the readme demo should work', () => {
   const file_contents  = getFixture('readme-demo');
   const store = ConventionStore.fromConventions({
     ...defaultConventions(),
-    fieldCaseConvention: pascalCase,
+    fieldCaseConvention: changeCase.pascalCase,
   });
   const [result, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
   expect(err).toBeFalsy();
   expect(result).toMatchSnapshot();
 });
 
-test('it can map model columns with under_scores to camelCase', () => {
+test('it can map model columns with under_scores to changeCase.camelCase', () => {
   const file_contents = getFixture('model-columns-with-underscores');
 
   const store = ConventionStore.fromConventions({
     ...defaultConventions(),
-    tableCaseConvention: pascalCase,
-    fieldCaseConvention: camelCase,
+    tableCaseConvention: changeCase.pascalCase,
+    fieldCaseConvention: changeCase.camelCase,
     pluralize: false
   });
   const [result, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
@@ -48,8 +48,8 @@ test('it can map relations with cascading deletion rules & foreign_key names', (
   const file_contents = getFixture('cascading-deletion-and-fk')
   const store = ConventionStore.fromConventions({
     ...defaultConventions(),
-    tableCaseConvention: pascalCase,
-    fieldCaseConvention: camelCase,
+    tableCaseConvention: changeCase.pascalCase,
+    fieldCaseConvention: changeCase.camelCase,
     pluralize: false
   });
   const [result, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
@@ -61,15 +61,15 @@ test('it can map relations with cascading deletion rules & foreign_key names', (
 test('it can map enum column to enum definition', async () => {
   const store = ConventionStore.fromConventions({
     ...defaultConventions(),
-    tableCaseConvention: pascalCase,
-    fieldCaseConvention: snakeCase,
-    enumCaseConvention: pascalCase,
+    tableCaseConvention: changeCase.pascalCase,
+    fieldCaseConvention: changeCase.snakeCase,
+    enumCaseConvention: changeCase.pascalCase,
     pluralize: false,
   });
   const file_contents = getFixture('enum');
   const [schema, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
   expect(err).toBeFalsy();
-  const new_schema = await formatSchema({ schema: schema! });
+  const new_schema = await formatSchema(schema!);
   expect(new_schema).toMatchSnapshot();
 });
 
@@ -77,8 +77,8 @@ test('it can optionally pluralize fields', () => {
   const file_contents = getFixture('pluralize-fields');
   const store = ConventionStore.fromConventions({
     ...defaultConventions(),
-    tableCaseConvention: pascalCase,
-    fieldCaseConvention: camelCase,
+    tableCaseConvention: changeCase.pascalCase,
+    fieldCaseConvention: changeCase.camelCase,
     pluralize: true
   });
   let [result, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
@@ -99,8 +99,8 @@ test('it can account for comments on model lines', () => {
 
   const store = ConventionStore.fromConventions({
     ...defaultConventions(),
-    tableCaseConvention: pascalCase,
-    fieldCaseConvention: camelCase,
+    tableCaseConvention: changeCase.pascalCase,
+    fieldCaseConvention: changeCase.camelCase,
     pluralize: false,
   });
   const [result, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
@@ -109,7 +109,7 @@ test('it can account for comments on model lines', () => {
 });
 
 const supported_case_conventions: { caseConvention: CaseChange }[] = [
-  { caseConvention: snakeCase }, { caseConvention: camelCase }, { caseConvention: pascalCase }];
+  { caseConvention: changeCase.snakeCase }, { caseConvention: changeCase.camelCase }, { caseConvention: changeCase.pascalCase }];
 /**
  * !!Warning!! Jest snapshots are _almost_ an anti-pattern. This is because if
  * you rename the test case, and introduce a bug, the bug is now valid to Jest.
@@ -120,27 +120,27 @@ const supported_case_conventions: { caseConvention: CaseChange }[] = [
 test.each(supported_case_conventions)('it can enforce a specified case convention on all fields of all tables ($caseConvention.name)', async ({ caseConvention }) => {
   const store = ConventionStore.fromConventions({
     ...defaultConventions(),
-    tableCaseConvention: pascalCase,
-    fieldCaseConvention: camelCase,
+    tableCaseConvention: changeCase.pascalCase,
+    fieldCaseConvention: changeCase.camelCase,
     mapFieldCaseConvention: caseConvention,
     pluralize: false
   });
 
   let file_contents = getFixture('idempotency');
   let [schema, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
-  let new_schema = await formatSchema({ schema: schema! });
+  let new_schema = await formatSchema(schema!);
   expect(err).toBeFalsy();
   expect(new_schema).toMatchSnapshot(caseConvention.name);
 
   file_contents = getFixture('cascading-deletion-and-fk');
   [schema, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
-  new_schema = await formatSchema({ schema: schema! });
+  new_schema = await formatSchema(schema!);
   expect(err).toBeFalsy();
   expect(new_schema).toMatchSnapshot(caseConvention.name);
 
   file_contents = getFixture('pluralize-fields');
   [schema, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
-  new_schema = await formatSchema({ schema: schema! });
+  new_schema = await formatSchema(schema!);
   expect(err).toBeFalsy();
   expect(new_schema).toMatchSnapshot(caseConvention.name);
 });
@@ -155,27 +155,27 @@ test.each(supported_case_conventions)('it can enforce a specified case conventio
 test.each(supported_case_conventions)('it can enforce a specified case convention on all table names ($caseConvention.name)', async ({ caseConvention }) => {
   const store = ConventionStore.fromConventions({
     ...defaultConventions(),
-    tableCaseConvention: pascalCase,
-    fieldCaseConvention: camelCase,
+    tableCaseConvention: changeCase.pascalCase,
+    fieldCaseConvention: changeCase.camelCase,
     mapTableCaseConvention: caseConvention,
     pluralize: false
   });
 
   let file_contents = getFixture('idempotency');
   let [schema, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
-  let new_schema = await formatSchema({ schema: schema! });
+  let new_schema = await formatSchema(schema!);
   expect(err).toBeFalsy();
   expect(new_schema).toMatchSnapshot(caseConvention.name);
 
   file_contents = getFixture('cascading-deletion-and-fk');
   [schema, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
-  new_schema = await formatSchema({ schema: schema! });
+  new_schema = await formatSchema(schema!);
   expect(err).toBeFalsy();
   expect(new_schema).toMatchSnapshot(caseConvention.name);
 
   file_contents = getFixture('pluralize-fields');
   [schema, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
-  new_schema = await formatSchema({ schema: schema! });
+  new_schema = await formatSchema(schema!);
   expect(err).toBeFalsy();
   expect(new_schema).toMatchSnapshot(caseConvention.name);
 });
@@ -183,14 +183,14 @@ test.each(supported_case_conventions)('it can enforce a specified case conventio
 test('it can enforce a specified case convention on views', async () => {
   const store = ConventionStore.fromConventions({
     ...defaultConventions(),
-    tableCaseConvention: pascalCase,
-    fieldCaseConvention: camelCase,
+    tableCaseConvention: changeCase.pascalCase,
+    fieldCaseConvention: changeCase.camelCase,
     pluralize: true,
   });
   const file_contents = getFixture('views');
   let [schema, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
   expect(err).toBeFalsy();
-  let new_schema = await formatSchema({ schema: schema! });
+  let new_schema = await formatSchema(schema!);
   expect(new_schema).toMatchSnapshot();
 });
 
@@ -199,8 +199,8 @@ test('it can map columns with `view` in the name', () => {
 
   const store = ConventionStore.fromConventions({
     ...defaultConventions(),
-    tableCaseConvention: pascalCase,
-    fieldCaseConvention: camelCase,
+    tableCaseConvention: changeCase.pascalCase,
+    fieldCaseConvention: changeCase.camelCase,
     pluralize: false
   });
   const [result, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
@@ -213,9 +213,9 @@ test('it can map tables while separating pluralization', () => {
 
   const store = ConventionStore.fromConventions({
     ...defaultConventions(),
-    tableCaseConvention: pascalCase,
-    fieldCaseConvention: camelCase,
-    mapTableCaseConvention: asPluralized(snakeCase),
+    tableCaseConvention: changeCase.pascalCase,
+    fieldCaseConvention: changeCase.camelCase,
+    mapTableCaseConvention: asPluralized(changeCase.snakeCase),
     pluralize: false,
   });
   const [result, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
@@ -229,9 +229,9 @@ test('it can map tables while separating pluralization', () => {
 
   const store = ConventionStore.fromConventions({
     ...defaultConventions(),
-    tableCaseConvention: pascalCase,
-    fieldCaseConvention: camelCase,
-    mapTableCaseConvention: asSingularized(snakeCase),
+    tableCaseConvention: changeCase.pascalCase,
+    fieldCaseConvention: changeCase.camelCase,
+    mapTableCaseConvention: asSingularized(changeCase.snakeCase),
     pluralize: false,
   });
   const [result, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
@@ -247,9 +247,9 @@ test('it can map ...horrendous indexes that make your head hurt for these people
 
   const store = ConventionStore.fromConventions({
     ...defaultConventions(),
-    tableCaseConvention: pascalCase,
-    fieldCaseConvention: camelCase,
-    mapTableCaseConvention: asSingularized(snakeCase),
+    tableCaseConvention: changeCase.pascalCase,
+    fieldCaseConvention: changeCase.camelCase,
+    mapTableCaseConvention: asSingularized(changeCase.snakeCase),
     pluralize: false,
   });
   const [result, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
@@ -262,14 +262,14 @@ test('it can rename enum in the database', async () => {
 
   const store = ConventionStore.fromConventions({
     ...defaultConventions(),
-    tableCaseConvention: pascalCase,
-    fieldCaseConvention: camelCase,
-    mapTableCaseConvention: snakeCase,
+    tableCaseConvention: changeCase.pascalCase,
+    fieldCaseConvention: changeCase.camelCase,
+    mapTableCaseConvention: changeCase.snakeCase,
     pluralize: false,
   });
   const [schema, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
   expect(err).toBeFalsy();
-  const result = await formatSchema({ schema: schema! });
+  const result = await formatSchema(schema!);
   expect(result).toMatchSnapshot();
 });
 
@@ -279,9 +279,9 @@ describe('must properly bring enum name to', () => {
 
     const store = ConventionStore.fromConventions({
       ...defaultConventions(),
-      tableCaseConvention: pascalCase,
-      fieldCaseConvention: camelCase,
-      enumCaseConvention: camelCase,
+      tableCaseConvention: changeCase.pascalCase,
+      fieldCaseConvention: changeCase.camelCase,
+      enumCaseConvention: changeCase.camelCase,
     });
     const [result, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
     expect(err).toBeFalsy();
@@ -293,9 +293,9 @@ describe('must properly bring enum name to', () => {
 
     const store = ConventionStore.fromConventions({
       ...defaultConventions(),
-      tableCaseConvention: pascalCase,
-      fieldCaseConvention: camelCase,
-      enumCaseConvention: pascalCase,
+      tableCaseConvention: changeCase.pascalCase,
+      fieldCaseConvention: changeCase.camelCase,
+      enumCaseConvention: changeCase.pascalCase,
     });
     const [result, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
     expect(err).toBeFalsy();
@@ -307,9 +307,9 @@ describe('must properly bring enum name to', () => {
 
     const store = ConventionStore.fromConventions({
       ...defaultConventions(),
-      tableCaseConvention: pascalCase,
-      fieldCaseConvention: camelCase,
-      enumCaseConvention: snakeCase,
+      tableCaseConvention: changeCase.pascalCase,
+      fieldCaseConvention: changeCase.camelCase,
+      enumCaseConvention: changeCase.snakeCase,
     });
     const [result, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
     expect(err).toBeFalsy();
@@ -323,9 +323,9 @@ describe('must properly map enum name to ', () => {
 
     const store = ConventionStore.fromConventions({
       ...defaultConventions(),
-      tableCaseConvention: pascalCase,
-      fieldCaseConvention: camelCase,
-      mapEnumCaseConvention: camelCase,
+      tableCaseConvention: changeCase.pascalCase,
+      fieldCaseConvention: changeCase.camelCase,
+      mapEnumCaseConvention: changeCase.camelCase,
     });
     const [result, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
     expect(err).toBeFalsy();
@@ -337,9 +337,9 @@ describe('must properly map enum name to ', () => {
 
     const store = ConventionStore.fromConventions({
       ...defaultConventions(),
-      tableCaseConvention: pascalCase,
-      fieldCaseConvention: camelCase,
-      mapEnumCaseConvention: pascalCase,
+      tableCaseConvention: changeCase.pascalCase,
+      fieldCaseConvention: changeCase.camelCase,
+      mapEnumCaseConvention: changeCase.pascalCase,
     });
     const [result, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
     expect(err).toBeFalsy();
@@ -351,9 +351,9 @@ describe('must properly map enum name to ', () => {
 
     const store = ConventionStore.fromConventions({
       ...defaultConventions(),
-      tableCaseConvention: pascalCase,
-      fieldCaseConvention: camelCase,
-      mapEnumCaseConvention: snakeCase,
+      tableCaseConvention: changeCase.pascalCase,
+      fieldCaseConvention: changeCase.camelCase,
+      mapEnumCaseConvention: changeCase.snakeCase,
     });
     const [result, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
     expect(err).toBeFalsy();
@@ -367,8 +367,8 @@ test('use table naming convention when enum naming convention is not specified',
 
   const store = ConventionStore.fromConventions({
     ...defaultConventions(),
-    tableCaseConvention: pascalCase,
-    fieldCaseConvention: camelCase,
+    tableCaseConvention: changeCase.pascalCase,
+    fieldCaseConvention: changeCase.camelCase,
   });
   const [result, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
   expect(err).toBeFalsy();
@@ -380,9 +380,9 @@ test('override table naming convention when enum naming convention is specified'
 
   const store = ConventionStore.fromConventions({
     ...defaultConventions(),
-    tableCaseConvention: pascalCase,
-    fieldCaseConvention: camelCase,
-    enumCaseConvention: camelCase,
+    tableCaseConvention: changeCase.pascalCase,
+    fieldCaseConvention: changeCase.camelCase,
+    enumCaseConvention: changeCase.camelCase,
   });
   const [result, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
   expect(err).toBeFalsy();
@@ -394,9 +394,9 @@ test('use table mapping convention when enum mapping convention is not specified
 
   const store = ConventionStore.fromConventions({
     ...defaultConventions(),
-    tableCaseConvention: pascalCase,
-    fieldCaseConvention: camelCase,
-    mapTableCaseConvention: camelCase,
+    tableCaseConvention: changeCase.pascalCase,
+    fieldCaseConvention: changeCase.camelCase,
+    mapTableCaseConvention: changeCase.camelCase,
   });
   const [result, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
   expect(err).toBeFalsy();
@@ -408,10 +408,10 @@ test('override table mapping convention when enum mapping convention is specifie
 
   const store = ConventionStore.fromConventions({
     ...defaultConventions(),
-    tableCaseConvention: pascalCase,
-    fieldCaseConvention: camelCase,
-    mapTableCaseConvention: camelCase,
-    mapEnumCaseConvention: pascalCase,
+    tableCaseConvention: changeCase.pascalCase,
+    fieldCaseConvention: changeCase.camelCase,
+    mapTableCaseConvention: changeCase.camelCase,
+    mapEnumCaseConvention: changeCase.pascalCase,
   });
   const [result, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
   expect(err).toBeFalsy();
@@ -423,9 +423,9 @@ test('skip enum name mapping when enum name is equal to map', () => {
 
   const store = ConventionStore.fromConventions({
     ...defaultConventions(),
-    tableCaseConvention: pascalCase,
-    fieldCaseConvention: camelCase,
-    mapEnumCaseConvention: pascalCase,
+    tableCaseConvention: changeCase.pascalCase,
+    fieldCaseConvention: changeCase.camelCase,
+    mapEnumCaseConvention: changeCase.pascalCase,
   });
   const [result, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
   expect(err).toBeFalsy();
@@ -434,12 +434,12 @@ test('skip enum name mapping when enum name is equal to map', () => {
 
 test('if the entity is marked disabled, or is marked with !, formatting is applied specially', async () => {
   const file_contents = getFixture('disable');
-  const cfg_file = getTestFile('disable.prisma-case-format');
+  const cfg_file = getTestFile('disable.prisma-schema-remap');
   const [store, store_err] = ConventionStore.fromConfStr(cfg_file);
   expect(store_err).toBeFalsy();
   const [schema, err] = ConventionTransformer.migrateCaseConventions(file_contents, store!);
   expect(err).toBeFalsy();
-  const result = await  formatSchema({ schema: schema! });
+  const result = await  formatSchema(schema!);
   expect(result).toMatchSnapshot();
 });
 
@@ -448,7 +448,7 @@ test('if next-auth is marked as in use, those models should be managed separatel
   const [store, store_err] = ConventionStore.fromConf({ uses_next_auth: true });
   expect(store_err).toBeFalsy();
   const [schema, err] = ConventionTransformer.migrateCaseConventions(file_contents, store!);
-  const result = await formatSchema({ schema: schema! });
+  const result = await formatSchema(schema!);
   expect(err).toBeFalsy();
   expect(result).toMatchSnapshot();
 });
@@ -461,7 +461,7 @@ test('issue', async () => {
   expect(store_err).toBeFalsy();
   const [schema, err] = ConventionTransformer.migrateCaseConventions(file_contents, store!);
   expect(err).toBeFalsy();
-  const result = await formatSchema({ schema: schema! });
+  const result = await formatSchema(schema!);
   expect(result).toMatchSnapshot();
 });
 
@@ -473,17 +473,17 @@ test('issue2', async () => {
   expect(store_err).toBeFalsy();
   const [schema, err] = ConventionTransformer.migrateCaseConventions(file_contents, store!);
   expect(err).toBeFalsy();
-  const result = await formatSchema({ schema: schema! });
+  const result = await formatSchema(schema!);
   expect(result).toMatchSnapshot();
 });
 
 test('disable2', async () => {
   const file_contents = getFixture('disable2');
-  const cfg_file = getTestFile('disable2.prisma-case-format');
+  const cfg_file = getTestFile('disable2.prisma-schema-remap');
   const [store, store_err] = ConventionStore.fromConfStr(cfg_file);
   expect(store_err).toBeFalsy();
   const [schema, err] = ConventionTransformer.migrateCaseConventions(file_contents, store!);
   expect(err).toBeFalsy();
-  const result = await formatSchema({ schema: schema! });
+  const result = await formatSchema(schema!);
   expect(result).toMatchSnapshot();
 });
