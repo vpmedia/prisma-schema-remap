@@ -4,7 +4,12 @@ This project is a community maintained fork of https://github.com/iiian/prisma-c
 
 `prisma introspect` names its model 1:1 with your database's conventions. Most of the time that is probably fine, however you may want or need different conventions in the generated client library. `prisma-schema-remap` makes it simple and direct to get the case conventions you want, applied across an entire `schema.prisma` with optional overrides per `model` or `field`.
 
+## Usage
+
+`pnpm add --save-dev @vpmedia/prisma-schema-remap`
+
 ## Use Cases
+
 ### As a one-time migration assistant
 
 Did `prisma introspect` on your huge database schema mis-case all your tables & fields? Is it wrecking your hope of using duck-types? Use `--dry-run` in combination with `--(map)?-(table|field|enum)-case` to figure out which case conventions are correct for your project. Once things look correct, drop the flag to save changes to the specified `--file`, which is your local root `schema.prisma` by default.
