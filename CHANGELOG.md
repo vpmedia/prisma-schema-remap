@@ -1,3 +1,14 @@
+## [1.2.0] - 2025-12-02
+
+### 💼 Other
+
+- Updated ignore files
+- Updated package name
+
+### ⚙️ Miscellaneous Tasks
+
+- Release
+- *(release)* V1.2.0
 ## [1.1.0] - 2025-12-02
 
 ### 🚀 Features
