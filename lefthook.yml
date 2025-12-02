@@ -1,0 +1,23 @@
+# Lefthook configuration
+# @namespace javascript
+# @copyright Copyright (c) 2025-present VPMedia
+# @author Andras Csizmadia <andras@vpmedia.hu>
+# @version 1.0.0
+# @see https://github.com/evilmartians/lefthook/blob/master/docs/configuration.md
+
+pre-commit:
+  parallel: false
+  commands:
+    lint_yaml:
+      glob: "*.{yml,yaml}"
+      run: yq 'true' {staged_files} > /dev/null
+    format_js:
+      glob: "*.{ts,tsx,js,jsx}"
+      run: |
+        set -e
+        pnpm exec prettier --write -- {staged_files}
+        git add {staged_files} &> /dev/null || true
+commit-msg:
+  commands:
+    commitlint:
+      run: pnpm exec commitlint --edit {1}

@@ -35,10 +35,10 @@ jobs:
         run: pnpm audit
       - name: Init
         run: pnpm install --frozen-lockfile
-      - name: Lint
-        run: pnpm run lint
+      # - name: Lint
+      #   run: pnpm lint
       - name: Test
-        run: pnpm run test
+        run: pnpm test
       - name: Calculate workflow duration
         id: workflow_duration
         env:

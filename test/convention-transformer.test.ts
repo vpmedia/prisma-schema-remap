@@ -20,7 +20,7 @@ function getTestFile(relative_path: string) {
 }
 
 test('the readme demo should work', () => {
-  const file_contents  = getFixture('readme-demo');
+  const file_contents = getFixture('readme-demo');
   const store = ConventionStore.fromConventions({
     ...defaultConventions(),
     fieldCaseConvention: changeCase.pascalCase,
@@ -37,7 +37,7 @@ test('it can map model columns with under_scores to changeCase.camelCase', () =>
     ...defaultConventions(),
     tableCaseConvention: changeCase.pascalCase,
     fieldCaseConvention: changeCase.camelCase,
-    pluralize: false
+    pluralize: false,
   });
   const [result, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
   expect(err).toBeFalsy();
@@ -45,16 +45,20 @@ test('it can map model columns with under_scores to changeCase.camelCase', () =>
 });
 
 test('it can map relations with cascading deletion rules & foreign_key names', () => {
-  const file_contents = getFixture('cascading-deletion-and-fk')
+  const file_contents = getFixture('cascading-deletion-and-fk');
   const store = ConventionStore.fromConventions({
     ...defaultConventions(),
     tableCaseConvention: changeCase.pascalCase,
     fieldCaseConvention: changeCase.camelCase,
-    pluralize: false
+    pluralize: false,
   });
   const [result, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
   expect(err).toBeFalsy();
-  expect(result?.includes('@relation(fields: [projectId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "jira_issues_projects_fkey")')).toBeTruthy();
+  expect(
+    result?.includes(
+      '@relation(fields: [projectId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "jira_issues_projects_fkey")'
+    )
+  ).toBeTruthy();
   expect(result?.includes('@relation(references: [id], fields: [formId], onDelete: Cascade)')).toBeTruthy();
 });
 
@@ -79,7 +83,7 @@ test('it can optionally pluralize fields', () => {
     ...defaultConventions(),
     tableCaseConvention: changeCase.pascalCase,
     fieldCaseConvention: changeCase.camelCase,
-    pluralize: true
+    pluralize: true,
   });
   let [result, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
   expect(err).toBeFalsy();
@@ -105,11 +109,16 @@ test('it can account for comments on model lines', () => {
   });
   const [result, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
   expect(err).toBeFalsy();
-  expect(result).toMatch(/fieldWithComments\s+String\?\s+@map\("field_with_comments"\)\s+\/\/ This should not break our ability to insert map annotations/);
+  expect(result).toMatch(
+    /fieldWithComments\s+String\?\s+@map\("field_with_comments"\)\s+\/\/ This should not break our ability to insert map annotations/
+  );
 });
 
 const supported_case_conventions: { caseConvention: CaseChange }[] = [
-  { caseConvention: changeCase.snakeCase }, { caseConvention: changeCase.camelCase }, { caseConvention: changeCase.pascalCase }];
+  { caseConvention: changeCase.snakeCase },
+  { caseConvention: changeCase.camelCase },
+  { caseConvention: changeCase.pascalCase },
+];
 /**
  * !!Warning!! Jest snapshots are _almost_ an anti-pattern. This is because if
  * you rename the test case, and introduce a bug, the bug is now valid to Jest.
@@ -117,33 +126,36 @@ const supported_case_conventions: { caseConvention: CaseChange }[] = [
  *
  * If you rename this test, don't do it while the build is broken.
  */
-test.each(supported_case_conventions)('it can enforce a specified case convention on all fields of all tables ($caseConvention.name)', async ({ caseConvention }) => {
-  const store = ConventionStore.fromConventions({
-    ...defaultConventions(),
-    tableCaseConvention: changeCase.pascalCase,
-    fieldCaseConvention: changeCase.camelCase,
-    mapFieldCaseConvention: caseConvention,
-    pluralize: false
-  });
+test.each(supported_case_conventions)(
+  'it can enforce a specified case convention on all fields of all tables ($caseConvention.name)',
+  async ({ caseConvention }) => {
+    const store = ConventionStore.fromConventions({
+      ...defaultConventions(),
+      tableCaseConvention: changeCase.pascalCase,
+      fieldCaseConvention: changeCase.camelCase,
+      mapFieldCaseConvention: caseConvention,
+      pluralize: false,
+    });
 
-  let file_contents = getFixture('idempotency');
-  let [schema, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
-  let new_schema = await formatSchema(schema!);
-  expect(err).toBeFalsy();
-  expect(new_schema).toMatchSnapshot(caseConvention.name);
+    let file_contents = getFixture('idempotency');
+    let [schema, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
+    let new_schema = await formatSchema(schema!);
+    expect(err).toBeFalsy();
+    expect(new_schema).toMatchSnapshot(caseConvention.name);
 
-  file_contents = getFixture('cascading-deletion-and-fk');
-  [schema, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
-  new_schema = await formatSchema(schema!);
-  expect(err).toBeFalsy();
-  expect(new_schema).toMatchSnapshot(caseConvention.name);
+    file_contents = getFixture('cascading-deletion-and-fk');
+    [schema, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
+    new_schema = await formatSchema(schema!);
+    expect(err).toBeFalsy();
+    expect(new_schema).toMatchSnapshot(caseConvention.name);
 
-  file_contents = getFixture('pluralize-fields');
-  [schema, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
-  new_schema = await formatSchema(schema!);
-  expect(err).toBeFalsy();
-  expect(new_schema).toMatchSnapshot(caseConvention.name);
-});
+    file_contents = getFixture('pluralize-fields');
+    [schema, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
+    new_schema = await formatSchema(schema!);
+    expect(err).toBeFalsy();
+    expect(new_schema).toMatchSnapshot(caseConvention.name);
+  }
+);
 
 /**
  * !!Warning!! Jest snapshots are _almost_ an anti-pattern. This is because if
@@ -152,33 +164,36 @@ test.each(supported_case_conventions)('it can enforce a specified case conventio
  *
  * If you rename this test, don't do it while the build is broken.
  */
-test.each(supported_case_conventions)('it can enforce a specified case convention on all table names ($caseConvention.name)', async ({ caseConvention }) => {
-  const store = ConventionStore.fromConventions({
-    ...defaultConventions(),
-    tableCaseConvention: changeCase.pascalCase,
-    fieldCaseConvention: changeCase.camelCase,
-    mapTableCaseConvention: caseConvention,
-    pluralize: false
-  });
+test.each(supported_case_conventions)(
+  'it can enforce a specified case convention on all table names ($caseConvention.name)',
+  async ({ caseConvention }) => {
+    const store = ConventionStore.fromConventions({
+      ...defaultConventions(),
+      tableCaseConvention: changeCase.pascalCase,
+      fieldCaseConvention: changeCase.camelCase,
+      mapTableCaseConvention: caseConvention,
+      pluralize: false,
+    });
 
-  let file_contents = getFixture('idempotency');
-  let [schema, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
-  let new_schema = await formatSchema(schema!);
-  expect(err).toBeFalsy();
-  expect(new_schema).toMatchSnapshot(caseConvention.name);
+    let file_contents = getFixture('idempotency');
+    let [schema, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
+    let new_schema = await formatSchema(schema!);
+    expect(err).toBeFalsy();
+    expect(new_schema).toMatchSnapshot(caseConvention.name);
 
-  file_contents = getFixture('cascading-deletion-and-fk');
-  [schema, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
-  new_schema = await formatSchema(schema!);
-  expect(err).toBeFalsy();
-  expect(new_schema).toMatchSnapshot(caseConvention.name);
+    file_contents = getFixture('cascading-deletion-and-fk');
+    [schema, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
+    new_schema = await formatSchema(schema!);
+    expect(err).toBeFalsy();
+    expect(new_schema).toMatchSnapshot(caseConvention.name);
 
-  file_contents = getFixture('pluralize-fields');
-  [schema, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
-  new_schema = await formatSchema(schema!);
-  expect(err).toBeFalsy();
-  expect(new_schema).toMatchSnapshot(caseConvention.name);
-});
+    file_contents = getFixture('pluralize-fields');
+    [schema, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
+    new_schema = await formatSchema(schema!);
+    expect(err).toBeFalsy();
+    expect(new_schema).toMatchSnapshot(caseConvention.name);
+  }
+);
 
 test('it can enforce a specified case convention on views', async () => {
   const store = ConventionStore.fromConventions({
@@ -201,7 +216,7 @@ test('it can map columns with `view` in the name', () => {
     ...defaultConventions(),
     tableCaseConvention: changeCase.pascalCase,
     fieldCaseConvention: changeCase.camelCase,
-    pluralize: false
+    pluralize: false,
   });
   const [result, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
   expect(err).toBeFalsy();
@@ -286,7 +301,7 @@ describe('must properly bring enum name to', () => {
     const [result, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
     expect(err).toBeFalsy();
     expect(result?.includes('enum postType')).toBeTruthy();
-  })
+  });
 
   test('PascalCase', () => {
     const file_contents = getFixture('enum');
@@ -300,7 +315,7 @@ describe('must properly bring enum name to', () => {
     const [result, err] = ConventionTransformer.migrateCaseConventions(file_contents, store);
     expect(err).toBeFalsy();
     expect(result?.includes('enum PostType')).toBeTruthy();
-  })
+  });
 
   test('snake_case', () => {
     const file_contents = getFixture('enum');
@@ -439,7 +454,7 @@ test('if the entity is marked disabled, or is marked with !, formatting is appli
   expect(store_err).toBeFalsy();
   const [schema, err] = ConventionTransformer.migrateCaseConventions(file_contents, store!);
   expect(err).toBeFalsy();
-  const result = await  formatSchema(schema!);
+  const result = await formatSchema(schema!);
   expect(result).toMatchSnapshot();
 });
 
@@ -456,7 +471,7 @@ test('if next-auth is marked as in use, those models should be managed separatel
 test('issue', async () => {
   const file_contents = getFixture('issue');
   const [store, store_err] = ConventionStore.fromConf({
-    uses_next_auth: true
+    uses_next_auth: true,
   });
   expect(store_err).toBeFalsy();
   const [schema, err] = ConventionTransformer.migrateCaseConventions(file_contents, store!);
@@ -468,7 +483,7 @@ test('issue', async () => {
 test('issue2', async () => {
   const file_contents = getFixture('issue2');
   const [store, store_err] = ConventionStore.fromConf({
-    uses_next_auth: true
+    uses_next_auth: true,
   });
   expect(store_err).toBeFalsy();
   const [schema, err] = ConventionTransformer.migrateCaseConventions(file_contents, store!);

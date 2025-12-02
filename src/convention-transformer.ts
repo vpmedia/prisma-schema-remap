@@ -8,7 +8,10 @@ const ENUM_TOKEN = 'enum';
 export type CaseChange = (input: string) => string;
 
 export function isPrimitive(field_type: string) {
-  field_type = field_type.replace('[]', '').replace('?', '').replace(/("\w+")/, '');
+  field_type = field_type
+    .replace('[]', '')
+    .replace('?', '')
+    .replace(/("\w+")/, '');
   field_type = field_type.split('(')[0];
   return [
     'String',
@@ -27,9 +30,11 @@ export function isPrimitive(field_type: string) {
 const MODEL_DECLARATION_REGEX = /^\s*(model|view)\s+(?<model>\w+)\s*\{\s*/;
 const ENTITY_MAP_ANNOTATION_REGEX = /@@map\("(?<map>.+)"\)/;
 const ENUM_DECLARATION_REGEX = /^\s*enum\s+(?<enum>\w+)\s*\{\s*/;
-const FIELD_DECLARATION_REGEX = /^(\s*)(?<field>\w+)(\s+)(?<type>[\w+]+(\((?:[\w\s"'.]+(?:,\s*)?)*\))?)(?<is_array_or_nullable>[\[\]\?]*)(\s+.*\s*)?(?<comments>\/\/.*)?/;
+const FIELD_DECLARATION_REGEX =
+  /^(\s*)(?<field>\w+)(\s+)(?<type>[\w+]+(\((?:[\w\s"'.]+(?:,\s*)?)*\))?)(?<is_array_or_nullable>[\[\]\?]*)(\s+.*\s*)?(?<comments>\/\/.*)?/;
 const MAP_ANNOTATION_REGEX = /@map\("(?<map>.+)"\)/;
-const RELATION_ANNOTATION_REGEX = /(?<preamble>@relation\("?\w*"?,?\s*)((?<cue1>(fields|references):\s*\[)(?<ids1>\w+(,\s*\w+\s*)*))((?<cue2>\]\,\s*(fields|references):\s*\[)(?<ids2>\w+(,\s*\w+\s*)*))(?<trailer>\].*)/;
+const RELATION_ANNOTATION_REGEX =
+  /(?<preamble>@relation\("?\w*"?,?\s*)((?<cue1>(fields|references):\s*\[)(?<ids1>\w+(,\s*\w+\s*)*))((?<cue2>\]\,\s*(fields|references):\s*\[)(?<ids2>\w+(,\s*\w+\s*)*))(?<trailer>\].*)/;
 const EZ_TABLE_INDEX_REGEX = /\@\@index\((?<fields>\[[\w\s,]+\])/;
 const CPLX_TABLE_INDEX_REGEX = /\@\@index.*/;
 const TABLE_UNIQUE_REGEX = /\@\@unique\((?<fields>\[[\w\s,]+\])/;
@@ -59,7 +64,7 @@ export class ConventionTransformer {
       return [, enum_reshape_error];
     }
 
-    return [lines!.join('\n'),];
+    return [lines!.join('\n')];
   }
 
   private static findExistingMapAnnotation(lines: string[]): [string | undefined, number] {
@@ -74,14 +79,17 @@ export class ConventionTransformer {
   }
 
   private static reshapeModelDefinitions(lines: string[], store: ConventionStore): [Error?] {
-    const [model_bounds, model_bounds_error] = ConventionTransformer.getDefinitionBounds([MODEL_TOKEN, VIEW_TOKEN], lines);
+    const [model_bounds, model_bounds_error] = ConventionTransformer.getDefinitionBounds(
+      [MODEL_TOKEN, VIEW_TOKEN],
+      lines
+    );
     if (model_bounds_error) {
       return [model_bounds_error];
     }
     /*
      * Applies the following invariant across all model names:
      *  - tableCaseConvention(curr_model_name) is used for the declaration of the model
-     *  - mapTableCase(curr_model_name) or current value is used for the @@map annotation, 
+     *  - mapTableCase(curr_model_name) or current value is used for the @@map annotation,
      *     unless that would equal tableCaseConvention(curr_model_name)
      */
     let offset = 0;
@@ -90,13 +98,16 @@ export class ConventionTransformer {
       const end = base_end + offset;
       try {
         const model_declaration_line = MODEL_DECLARATION_REGEX.exec(lines[start]);
-        const [existing_db_model_name, map_anno_index] = ConventionTransformer.findExistingMapAnnotation(lines.slice(start, end));
+        const [existing_db_model_name, map_anno_index] = ConventionTransformer.findExistingMapAnnotation(
+          lines.slice(start, end)
+        );
         const curr_model_name = model_declaration_line!.groups!['model'];
         if (store.isDisabled(curr_model_name)) {
           continue;
         }
         const conv_model_name = store.table(curr_model_name)(curr_model_name);
-        const db_model_name = store.mapTable?.(curr_model_name)?.(curr_model_name) ?? existing_db_model_name ?? curr_model_name;
+        const db_model_name =
+          store.mapTable?.(curr_model_name)?.(curr_model_name) ?? existing_db_model_name ?? curr_model_name;
         const map_anno_line_no = start + map_anno_index;
         if (conv_model_name == db_model_name && 0 <= map_anno_index) {
           lines.splice(map_anno_line_no, 1);
@@ -154,7 +165,7 @@ export class ConventionTransformer {
     /*
      * Applies the following invariant across all enum names:
      *  - enumCaseConvention(curr_enum_name) is used for the declaration of the enum
-     *  - mapEnumCase(curr_enum_name) or current value is used for the @@map annotation, 
+     *  - mapEnumCase(curr_enum_name) or current value is used for the @@map annotation,
      *     unless that would equal tableCaseConvention(curr_enum_name)
      */
     let offset = 0;
@@ -163,13 +174,16 @@ export class ConventionTransformer {
       const end = base_end + offset;
       try {
         const enum_declaration_line = ENUM_DECLARATION_REGEX.exec(lines[start]);
-        const [existing_db_enum_name, map_anno_idx] = ConventionTransformer.findExistingMapAnnotation(lines.slice(start, end));
+        const [existing_db_enum_name, map_anno_idx] = ConventionTransformer.findExistingMapAnnotation(
+          lines.slice(start, end)
+        );
         const curr_enum_name = enum_declaration_line!.groups!['enum'];
         if (store.isDisabled(curr_enum_name)) {
           continue;
         }
         const conv_enum_name = store.enum(curr_enum_name)(curr_enum_name);
-        const db_enum_name = store.mapEnum?.(curr_enum_name)?.(curr_enum_name) ?? existing_db_enum_name ?? curr_enum_name;
+        const db_enum_name =
+          store.mapEnum?.(curr_enum_name)?.(curr_enum_name) ?? existing_db_enum_name ?? curr_enum_name;
         const map_anno_line_no = start + map_anno_idx;
         if (conv_enum_name == db_enum_name && 0 <= map_anno_idx) {
           lines.splice(map_anno_line_no, 1);
@@ -195,16 +209,23 @@ export class ConventionTransformer {
     return [];
   }
 
-  private static reshapeModelFields(lines: string[], store: ConventionStore, reshaped_enum_map: Map<string, string>): [Error?] {
-    const [model_bounds, model_bounds_error] = ConventionTransformer.getDefinitionBounds([MODEL_TOKEN, VIEW_TOKEN], lines);
+  private static reshapeModelFields(
+    lines: string[],
+    store: ConventionStore,
+    reshaped_enum_map: Map<string, string>
+  ): [Error?] {
+    const [model_bounds, model_bounds_error] = ConventionTransformer.getDefinitionBounds(
+      [MODEL_TOKEN, VIEW_TOKEN],
+      lines
+    );
     if (model_bounds_error) {
       return [model_bounds_error];
     }
-    
+
     /*
      * Applies the following invariant across all model/view field names:
      *  - fieldCaseConvention(curr_field_name) is used for the declaration of the model
-     *  - mapFieldCase(curr_field_name) or current value is used for the @map annotation, 
+     *  - mapFieldCase(curr_field_name) or current value is used for the @map annotation,
      *     unless that would equal fieldCaseConvention(curr_field_name)
      */
     for (const [start, end] of model_bounds!) {
@@ -212,10 +233,11 @@ export class ConventionTransformer {
       if (store.isDisabled(context!)) {
         continue;
       }
-      for (let i = start+1; i < end; i++) {
+      for (let i = start + 1; i < end; i++) {
         const field_declaration_line = FIELD_DECLARATION_REGEX.exec(lines[i]);
         if (field_declaration_line) {
-          let [search_term, chunk0, field, chunk2, type, _unused, is_array_or_nullable, chunk5] = field_declaration_line;
+          let [search_term, chunk0, field, chunk2, type, _unused, is_array_or_nullable, chunk5] =
+            field_declaration_line;
           if (store.isDisabled(context!, field)) {
             continue;
           }
@@ -226,35 +248,35 @@ export class ConventionTransformer {
             chunk5 = chunk5.replace(`@map("${og_db_field_name}")`, '');
           }
           let conv_field_name = store.field(context!, field)(field);
-          const db_field_name = store.mapField?.(context!, conv_field_name)?.(conv_field_name) ?? og_db_field_name ?? field;
+          const db_field_name =
+            store.mapField?.(context!, conv_field_name)?.(conv_field_name) ?? og_db_field_name ?? field;
           if (store.isPlural(context!, field) && is_array_or_nullable.startsWith('[]')) {
             conv_field_name = plural(conv_field_name);
           }
           let map_anno_fragment = '';
 
           // Primitive type
-          if (
-            conv_field_name !== db_field_name &&
-            !lines[i].includes('@relation') &&
-            isPrimitive(type)
-          ) {
+          if (conv_field_name !== db_field_name && !lines[i].includes('@relation') && isPrimitive(type)) {
             map_anno_fragment = ` @map("${db_field_name}")`;
-          } 
+          }
           // Enum type
           else if (enum_name) {
             type = enum_name;
             map_anno_fragment = ` @map("${db_field_name}")`;
-          } 
+          }
           // User type
           else if (!isPrimitive(type)) {
-            type = store.table(context!)(type) ?? type ;
+            type = store.table(context!)(type) ?? type;
           }
 
           if (conv_field_name === db_field_name) {
             map_anno_fragment = '';
           }
 
-          lines[i] = lines[i].replace(search_term, [chunk0, conv_field_name, chunk2, type, is_array_or_nullable, map_anno_fragment, chunk5,].join(''));
+          lines[i] = lines[i].replace(
+            search_term,
+            [chunk0, conv_field_name, chunk2, type, is_array_or_nullable, map_anno_fragment, chunk5].join('')
+          );
         }
 
         const relation_annotation_line = RELATION_ANNOTATION_REGEX.exec(lines[i]);
@@ -264,47 +286,58 @@ export class ConventionTransformer {
           const { preamble, cue1, ids1, cue2, ids2, trailer } = relation_annotation_line!.groups!;
           const updated_ids1 = ids1
             .split(/,\s*/)
-            .map(e => store.field(context!, e)(e))
+            .map((e) => store.field(context!, e)(e))
             .join(', ');
           const updated_ids2 = ids2
             .split(/,\s*/)
-            .map(e => store.field(context!, e)(e))
+            .map((e) => store.field(context!, e)(e))
             .join(', ');
-          lines[i] = lines[i].replace(search_term, [preamble, cue1, updated_ids1, cue2, updated_ids2, trailer].join(''));
-
+          lines[i] = lines[i].replace(
+            search_term,
+            [preamble, cue1, updated_ids1, cue2, updated_ids2, trailer].join('')
+          );
         }
         const table_unique_declaration_line = TABLE_UNIQUE_REGEX.exec(lines[i]);
         if (table_unique_declaration_line) {
           const field_names = table_unique_declaration_line!.groups!['fields'];
-          const updated_field_names = `[${field_names.split(/,\s*/).map(e => store.field(context!, e)(e)).join(', ')}]`;
+          const updated_field_names = `[${field_names
+            .split(/,\s*/)
+            .map((e) => store.field(context!, e)(e))
+            .join(', ')}]`;
           lines[i] = lines[i].replace(field_names, updated_field_names);
         }
 
         let table_index_declaration_line = EZ_TABLE_INDEX_REGEX.exec(lines[i]);
         if (table_index_declaration_line) {
           const field_names = table_index_declaration_line!.groups!['fields'];
-          const updated_field_names = `[${field_names.split(/,\s*/).map(e => store.field(context!, e)(e)).join(', ')}]`;
+          const updated_field_names = `[${field_names
+            .split(/,\s*/)
+            .map((e) => store.field(context!, e)(e))
+            .join(', ')}]`;
           lines[i] = lines[i].replace(field_names, updated_field_names);
         }
-        table_index_declaration_line =
-          table_index_declaration_line ? null : CPLX_TABLE_INDEX_REGEX.exec(lines[i]);
+        table_index_declaration_line = table_index_declaration_line ? null : CPLX_TABLE_INDEX_REGEX.exec(lines[i]);
         if (table_index_declaration_line) {
-          const field_names = [...new Set([
-            ...ConventionTransformer.getFieldNames(lines[i], ConventionTransformer.DEFAULT_START_POS),
-            ...ConventionTransformer.getFieldNames(lines[i], ConventionTransformer.FIELDS_START_POS),
-            ...ConventionTransformer.getFieldNames(lines[i], ConventionTransformer.REF_START_POS),
-          ])];
+          const field_names = [
+            ...new Set([
+              ...ConventionTransformer.getFieldNames(lines[i], ConventionTransformer.DEFAULT_START_POS),
+              ...ConventionTransformer.getFieldNames(lines[i], ConventionTransformer.FIELDS_START_POS),
+              ...ConventionTransformer.getFieldNames(lines[i], ConventionTransformer.REF_START_POS),
+            ]),
+          ];
           lines[i] = field_names.reduce(
             (line, next) => line.replace(next, store.field(context!, next)(next)),
             lines[i]
           );
         }
 
-
         const table_id_declaration_line = TABLE_ID_REGEX.exec(lines[i]);
         if (table_id_declaration_line) {
           const field_names = table_id_declaration_line!.groups!['fields'];
-          const updated_field_names = `[${field_names.split(/,\s*/).map(e =>  store.field(context!, e)(e)).join(', ')}]`;
+          const updated_field_names = `[${field_names
+            .split(/,\s*/)
+            .map((e) => store.field(context!, e)(e))
+            .join(', ')}]`;
           lines[i] = lines[i].replace(field_names, updated_field_names);
         }
       }
@@ -330,7 +363,7 @@ export class ConventionTransformer {
     const regex = new RegExp(`${start_position}\\s*:\\s*\\[([^\\]]+)\\]`, 'g');
     const matches = regex.exec(haystack);
 
-    return matches ? (ConventionTransformer.stripProperties(matches[1]).split(/\s*[,]\s*/)) : [];
+    return matches ? ConventionTransformer.stripProperties(matches[1]).split(/\s*[,]\s*/) : [];
   }
 
   private static stripProperties(haystack: string): string {
@@ -372,6 +405,6 @@ export class ConventionTransformer {
         return [, new Error(`${token} starting on line ${boundary_cursor[0]} did not end`)];
       }
     }
-    return [definition_bounds.sort(([start_a], [start_b]) => start_a - start_b),];
+    return [definition_bounds.sort(([start_a], [start_b]) => start_a - start_b)];
   }
 }
