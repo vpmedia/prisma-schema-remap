@@ -1,5 +1,7 @@
 .schema.prisma
 .vscode/
+.github/
+.prettierignore
 bin/**.js.map
 commitlint.config.ts
 coverage/
