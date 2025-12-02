@@ -1,9 +1,14 @@
 .schema.prisma
 .vscode/
 bin/**.js.map
+commitlint.config.ts
 coverage/
+eslint.config.ts
+lefthook.yml
 pnpm-lock.yaml
+prettier.config.mjs
 schema.prisma
 src/
 test/
 tsconfig.json
+vitest.config.ts
