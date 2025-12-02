@@ -1,3 +1,15 @@
+## [1.3.0] - 2025-12-02
+
+### 💼 Other
+
+- Updated npmignore
+- Updated npmignore
+- Updated npmignore
+
+### ⚙️ Miscellaneous Tasks
+
+- Release
+- *(release)* V1.3.0
 ## [1.2.0] - 2025-12-02
 
 ### 💼 Other
