@@ -1,4 +1,6 @@
 onlyBuiltDependencies:
   - esbuild
 trustPolicy: no-downgrade
+trustPolicyExclude:
+  - 'chokidar@4.0.3'
 minimumReleaseAge: 2880
