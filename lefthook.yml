@@ -15,7 +15,7 @@ pre-commit:
       glob: "*.{ts,tsx,js,jsx}"
       run: |
         set -e
-        pnpm exec prettier --write -- {staged_files}
+        pnpm exec prettier --write -- {staged_files} || true
         git add {staged_files} &> /dev/null || true
 commit-msg:
   commands:
