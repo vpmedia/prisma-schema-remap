@@ -27,7 +27,7 @@
     "@types/pluralize": "0.0.33",
     "@vitest/coverage-v8": "^4.0.16",
     "eslint": "^9.39.2",
-    "eslint-plugin-jsdoc": "^61.5.0",
+    "eslint-plugin-jsdoc": "^62.0.0",
     "eslint-plugin-n": "^17.23.1",
     "eslint-plugin-unicorn": "^62.0.0",
     "globals": "^17.0.0",
