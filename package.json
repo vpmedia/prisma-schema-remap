@@ -23,9 +23,9 @@
   "devDependencies": {
     "@eslint/js": "^9.39.2",
     "@types/js-yaml": "^4.0.9",
-    "@types/node": "^25.0.5",
+    "@types/node": "^25.0.6",
     "@types/pluralize": "0.0.33",
-    "@vitest/coverage-v8": "^4.0.16",
+    "@vitest/coverage-v8": "^4.0.17",
     "eslint": "^9.39.2",
     "eslint-plugin-jsdoc": "^62.0.0",
     "eslint-plugin-n": "^17.23.1",
@@ -35,7 +35,7 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.52.0",
-    "vitest": "^4.0.16"
+    "vitest": "^4.0.17"
   },
   "dependencies": {
     "@prisma/internals": "^7.2.0",
