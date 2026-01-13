@@ -23,7 +23,7 @@
   "devDependencies": {
     "@eslint/js": "^9.39.2",
     "@types/js-yaml": "^4.0.9",
-    "@types/node": "^25.0.6",
+    "@types/node": "^25.0.7",
     "@types/pluralize": "0.0.33",
     "@vitest/coverage-v8": "^4.0.17",
     "eslint": "^9.39.2",
