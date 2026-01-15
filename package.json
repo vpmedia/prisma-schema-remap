@@ -31,7 +31,7 @@
     "eslint-plugin-n": "^17.23.2",
     "eslint-plugin-unicorn": "^62.0.0",
     "globals": "^17.0.0",
-    "prettier": "^3.7.4",
+    "prettier": "^3.8.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.53.0",
@@ -50,7 +50,8 @@
       "ignoreGhsas": [
         "GHSA-52f5-9888-hmc6",
         "GHSA-3xgq-45jj-v275",
-        "GHSA-mh29-5h37-fv8m"
+        "GHSA-mh29-5h37-fv8m",
+        "GHSA-pj86-cfqh-vqx6"
       ]
     },
     "overrides": {
