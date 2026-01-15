@@ -48,14 +48,8 @@
   "pnpm": {
     "auditConfig": {
       "ignoreGhsas": [
-        "GHSA-52f5-9888-hmc6",
-        "GHSA-3xgq-45jj-v275",
-        "GHSA-mh29-5h37-fv8m",
-        "GHSA-pj86-cfqh-vqx6"
+        "GHSA-73rr-hh4g-fpgx"
       ]
-    },
-    "overrides": {
-      "hono": "4.10.6"
     },
     "onlyBuiltDependencies": [
       "@prisma/engines",
