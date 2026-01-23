@@ -25,17 +25,17 @@
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^25.0.10",
     "@types/pluralize": "0.0.33",
-    "@vitest/coverage-v8": "^4.0.17",
+    "@vitest/coverage-v8": "^4.0.18",
     "eslint": "^9.39.2",
-    "eslint-plugin-jsdoc": "^62.3.0",
+    "eslint-plugin-jsdoc": "^62.3.1",
     "eslint-plugin-n": "^17.23.2",
     "eslint-plugin-unicorn": "^62.0.0",
-    "globals": "^17.0.0",
+    "globals": "^17.1.0",
     "prettier": "^3.8.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.53.1",
-    "vitest": "^4.0.17"
+    "vitest": "^4.0.18"
   },
   "dependencies": {
     "@prisma/internals": "^7.3.0",
