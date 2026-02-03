@@ -4,4 +4,4 @@ trustPolicy: no-downgrade
 trustPolicyExclude:
   - chokidar
   - ts-api-utils
-minimumReleaseAge: 1440
+minimumReleaseAge: 0
