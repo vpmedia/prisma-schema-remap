@@ -45,11 +45,6 @@
     "pluralize": "8.0.0"
   },
   "pnpm": {
-    "auditConfig": {
-      "ignoreGhsas": [
-        "GHSA-73rr-hh4g-fpgx"
-      ]
-    },
     "onlyBuiltDependencies": [
       "@prisma/engines",
       "esbuild"
