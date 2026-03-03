@@ -30,7 +30,7 @@
     "eslint-plugin-jsdoc": "^62.7.1",
     "eslint-plugin-n": "^17.24.0",
     "eslint-plugin-unicorn": "^63.0.0",
-    "globals": "^17.3.0",
+    "globals": "^17.4.0",
     "prettier": "^3.8.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
