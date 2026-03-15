@@ -15,7 +15,7 @@
     "skipLibCheck": true,
     "declaration": false /* Generates corresponding '.d.ts' file. */,
     "sourceMap": true /* Generates corresponding '.map' file. */,
-    "rootDir": ".",
+    "rootDir": "./src",
     "outDir": "./bin" /* Redirect output structure to the directory. */,
     // "downlevelIteration": true /* Provide full support for iterables in 'for-of', spread, and destructuring when targeting 'ES5' or 'ES3'. */,
     "strict": true /* Enable all strict type-checking options. */,
