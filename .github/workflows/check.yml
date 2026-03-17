@@ -18,7 +18,7 @@ jobs:
         node-version: [24.X]
     steps:
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v5
         with:
           version: latest
           run_install: false
