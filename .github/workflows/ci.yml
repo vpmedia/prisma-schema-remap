@@ -21,7 +21,7 @@ jobs:
         id: start_timestamp
         run: echo "timestamp=$EPOCHSECONDS" >> "$GITHUB_OUTPUT"
       - uses: actions/checkout@v6
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v5
         with:
           version: latest
           run_install: false
