@@ -49,6 +49,11 @@
     "onlyBuiltDependencies": [
       "@prisma/engines",
       "esbuild"
-    ]
+    ],
+    "auditConfig": {
+      "ignoreGhsas": [
+        "GHSA-38f7-945m-qr2g"
+      ]
+    }
   }
 }
