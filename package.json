@@ -25,7 +25,7 @@
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^25.5.0",
     "@types/pluralize": "0.0.33",
-    "@vitest/coverage-v8": "^4.1.0",
+    "@vitest/coverage-v8": "^4.1.1",
     "eslint": "^10.1.0",
     "eslint-plugin-jsdoc": "^62.8.0",
     "eslint-plugin-n": "^17.24.0",
@@ -33,9 +33,9 @@
     "globals": "^17.4.0",
     "prettier": "^3.8.1",
     "ts-node": "^10.9.2",
-    "typescript": "6.0.0-dev.20260322",
-    "typescript-eslint": "^8.57.1",
-    "vitest": "^4.1.0"
+    "typescript": "^6.0.2",
+    "typescript-eslint": "^8.57.2",
+    "vitest": "^4.1.1"
   },
   "dependencies": {
     "@prisma/internals": "^7.5.0",
