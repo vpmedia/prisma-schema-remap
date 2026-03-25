@@ -47,7 +47,7 @@ jobs:
           START_TIMESTAMP: ${{ steps.start_timestamp.outputs.timestamp }}
         run: echo "timedelta=$((EPOCHSECONDS - START_TIMESTAMP))" >> "$GITHUB_OUTPUT"
         if: always()
-      - uses: slackapi/slack-github-action@v3
+      - uses: slackapi/slack-github-action@af78098f536edbc4de71162a307590698245be95  #3.0.1
         with:
           errors: true
           method: chat.postMessage

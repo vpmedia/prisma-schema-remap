@@ -48,7 +48,7 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           pnpm version minor -m "chore(release): v%s"
       - name: Changelog
-        uses: orhun/git-cliff-action@v4
+        uses: orhun/git-cliff-action@c93ef52f3d0ddcdcc9bd5447d98d458a11cd4f72  #4.7.1
         env:
           OUTPUT: CHANGELOG.md
       - name: Commit
@@ -66,7 +66,7 @@ jobs:
           START_TIMESTAMP: ${{ steps.start_timestamp.outputs.timestamp }}
         run: echo "timedelta=$((EPOCHSECONDS - START_TIMESTAMP))" >> "$GITHUB_OUTPUT"
         if: always()
-      - uses: slackapi/slack-github-action@v3
+      - uses: slackapi/slack-github-action@af78098f536edbc4de71162a307590698245be95  #3.0.1
         with:
           errors: true
           method: chat.postMessage
