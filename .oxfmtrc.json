@@ -1,0 +1,23 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "trailingComma": "es5",
+  "printWidth": 120,
+  "singleQuote": true,
+  "sortPackageJson": false,
+  "ignorePatterns": [
+    ".github/",
+    ".vscode/",
+    ".idea/",
+    "build/",
+    "coverage/",
+    "deploy/",
+    "dist/",
+    "node_modules/",
+    "public/",
+    "types/",
+    "*.yml",
+    "*.yaml",
+    "*.html",
+    "*.md"
+  ]
+}
