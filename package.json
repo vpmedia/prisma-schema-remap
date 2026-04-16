@@ -26,8 +26,8 @@
     "change-case": "5.4.4",
     "commander": "14.0.3",
     "js-yaml": "4.1.1",
-    "oxfmt": "^0.44.0",
-    "oxlint": "^1.59.0",
+    "oxfmt": "^0.45.0",
+    "oxlint": "^1.60.0",
     "oxlint-tsgolint": "^0.20.0",
     "pluralize": "8.0.0"
   },
