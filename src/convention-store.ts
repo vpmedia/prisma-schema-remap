@@ -365,7 +365,7 @@ export function defaultConventions() {
 }
 
 function imbueWithNextAuth(content: ConventionFile): ConventionFile {
-  content.override = content.override ?? {};
+  content.override ??= {};
 
   content.override.Account = {
     default: 'table=pascal; mapTable=pascal;',
