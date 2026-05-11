@@ -5,3 +5,4 @@ trustPolicyExclude:
   - chokidar
   - ts-api-utils
 minimumReleaseAge: 1440
+blockExoticSubdeps: true
