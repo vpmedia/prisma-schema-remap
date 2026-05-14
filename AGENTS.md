@@ -9,13 +9,12 @@ CLI that rewrites case conventions across an entire `schema.prisma` (with option
 - **Language:** TypeScript (CommonJS, `"type": "commonjs"`)
 - **Runtime:** Node.js (CLI)
 - **Package Manager:** pnpm
-- **Domain:** CLI to remap Prisma introspected `schema.prisma` casing conventions
 - **Runtime Dependencies:** `@prisma/internals`, `commander`, `change-case`, `pluralize`, `chalk`, `js-yaml`
 - **Build:** `tsc`
 - **Testing:** Vitest, @vitest/coverage-v8
 - **Lint/Format:** oxlint (+ `oxlint-tsgolint`), oxfmt
 - **Type Checking:** TypeScript
-- **Tooling:** ts-node, bin entry `prisma-schema-remap`
+- **Tooling:** ts-node, lefthook (git hooks), commitlint (conventional commits), bin entry `prisma-schema-remap`
 
 ## Documentation
 
@@ -31,8 +30,7 @@ CLI that rewrites case conventions across an entire `schema.prisma` (with option
 - **Build:** `pnpm build` (`tsc`)
 - **Run CLI locally:** `pnpm cli` (executes `bin/cli.js`)
 - **Test:** `pnpm test`
-- **Lint:** `pnpm lint`
-- **Format:** `pnpm format`
+- **Lint / Format / Typecheck:** `pnpm lint` / `pnpm format` / `pnpm typecheck`
 
 ## Project Structure
 
@@ -48,7 +46,7 @@ CLI that rewrites case conventions across an entire `schema.prisma` (with option
 
 - **Commits:** Conventional Commits (`@commitlint/config-conventional`)
 - **Modules:** CommonJS (project-wide)
-- **Style:** Enforced by oxlint + oxfmt
+- **Style:** Enforced by oxlint + oxfmt — do not hand-format
 
 ## Testing
 
