@@ -21,7 +21,6 @@ CLI that rewrites case conventions across an entire `schema.prisma` (with option
 - Commander: https://context7.com/tj/commander.js/llms.txt
 - OXC (oxlint, oxfmt): https://oxc.rs/llms.txt
 - Prisma: https://www.prisma.io/docs/llms.txt
-- TypeScript: https://www.typescriptlang.org/llms.txt
 - Vitest: https://vitest.dev/llms.txt
 
 ## Commands
