@@ -3,3 +3,4 @@ bin
 coverage
 schema.prisma
 .prisma-schema-format
+.claude/settings.local.json
