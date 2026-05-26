@@ -1,3 +1,34 @@
+## [1.6.0] - 2026-05-26
+
+### 💼 Other
+
+- *(deps)* Bump dependency versions
+- *(deps)* Bump dependency versions
+- *(deps)* Bump dependency versions
+- *(deps)* Bump dependency versions
+- *(deps)* Bump dependency versions
+- *(deps)* Bump dependency versions
+- *(deps)* Bump dependency versions
+- *(deps)* Move oxc tools to dev deps
+
+### 📚 Documentation
+
+- Expand AGENTS.md with overview, tech stack, and project guide
+- *(agents)* Add Documentation section with llms.txt links
+- *(agents)* Standardize structure and commit-config wording
+- *(agents)* Remove non-existent TypeScript llms.txt link
+- Refresh AGENTS.md
+
+### ⚙️ Miscellaneous Tasks
+
+- Release
+- Fix lint errors
+- *(ai)* Add shared clean-code rules for Claude
+- *(lint)* Switch oxlint categories to error and disable current violations
+- Enable blockExoticSubdeps in pnpm workspace
+- Gitignore .claude/settings.local.json
+- Update dependencies
+- *(release)* V1.6.0
 ## [1.5.0] - 2026-04-23
 
 ### 💼 Other
