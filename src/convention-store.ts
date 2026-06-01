@@ -2,7 +2,7 @@ import { camelCase, pascalCase, snakeCase } from 'change-case';
 import { CaseChange, asPluralized, asSingularized } from './caseConventions';
 import { existsSync, readFileSync } from 'fs';
 import * as jsyaml from 'js-yaml';
-import { resolve } from 'path';
+import path from 'path';
 
 export function tryGetTableCaseConvention(raw_type: string): [CaseChange?, Error?] {
   const [type, case_flavor] = raw_type.split(',');
@@ -78,14 +78,14 @@ export type ConventionFile = {
 export const DEFAULT_PRISMA_CASE_FORMAT_FILE_LOCATION = '.prisma-schema-remap';
 
 export class ConventionStore {
-  public static fromFile(path: string, usesNextAuth?: boolean): [ConventionStore?, Error?] {
-    if (!existsSync(path)) {
-      if (path === resolve(DEFAULT_PRISMA_CASE_FORMAT_FILE_LOCATION)) {
+  public static fromFile(filePath: string, usesNextAuth?: boolean): [ConventionStore?, Error?] {
+    if (!existsSync(filePath)) {
+      if (filePath === path.resolve(DEFAULT_PRISMA_CASE_FORMAT_FILE_LOCATION)) {
         return ConventionStore.fromConf({});
       }
-      return [, new Error('file does not exist:  ' + path)];
+      return [, new Error('file does not exist:  ' + filePath)];
     }
-    return ConventionStore.fromConfStr(readFileSync(path).toString());
+    return ConventionStore.fromConfStr(readFileSync(filePath).toString());
   }
 
   public static fromConfStr(conf: string): [ConventionStore?, Error?] {

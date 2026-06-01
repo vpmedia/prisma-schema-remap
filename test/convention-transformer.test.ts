@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
 
-import { join } from 'path';
+import path from 'path';
 
 import * as changeCase from 'change-case';
 import { CaseChange, ConventionTransformer } from '../src/convention-transformer';
@@ -10,13 +10,13 @@ import { asPluralized, asSingularized } from '../src/caseConventions';
 import { ConventionStore, defaultConventions } from '../src/convention-store';
 
 const PRISMA_SUFFIX = '.schema.prisma';
-const FIXTURES_DIR = join(process.cwd(), 'test', '__fixtures__');
+const FIXTURES_DIR = path.join(process.cwd(), 'test', '__fixtures__');
 function getFixture(relative_path: string) {
-  return readFileSync(join(FIXTURES_DIR, relative_path + PRISMA_SUFFIX), 'utf-8');
+  return readFileSync(path.join(FIXTURES_DIR, relative_path + PRISMA_SUFFIX), 'utf-8');
 }
 
 function getTestFile(relative_path: string) {
-  return readFileSync(join(FIXTURES_DIR, relative_path), 'utf-8');
+  return readFileSync(path.join(FIXTURES_DIR, relative_path), 'utf-8');
 }
 
 test('the readme demo should work', () => {

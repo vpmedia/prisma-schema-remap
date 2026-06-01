@@ -11,7 +11,7 @@ import {
   SUPPORTED_CASE_CONVENTIONS_MESSAGE,
   tryGetTableCaseConvention,
 } from './convention-store';
-import { resolve } from 'path';
+import path from 'path';
 
 const DEFAULT_FILE_LOCATION = 'schema.prisma';
 const program = new Command(`prisma-schema-remap`);
@@ -64,7 +64,7 @@ async function run() {
     process.exit(1);
   }
 
-  const [conv, conv_err] = ConventionStore.fromFile(resolve(options.configFile));
+  const [conv, conv_err] = ConventionStore.fromFile(path.resolve(options.configFile));
   if (conv_err) {
     console.error(
       chalk.red('Encountered an error while trying to read provided config file at path ' + options.convFile)
