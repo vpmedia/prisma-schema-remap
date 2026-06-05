@@ -45,6 +45,7 @@
     "no-useless-escape": "off",
     "prefer-const": "off",
     "prefer-destructuring": "off",
+    "prefer-named-capture-group": "off",
     "prefer-template": "off",
     "require-unicode-regexp": "off",
     "sort-imports": "off",
