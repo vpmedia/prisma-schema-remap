@@ -30,11 +30,11 @@
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",
-    "@types/node": "^25.9.4",
+    "@types/node": "^26.0.0",
     "@types/pluralize": "0.0.33",
     "@vitest/coverage-v8": "^4.1.9",
     "globals": "^17.7.0",
-    "oxfmt": "^0.54.0",
+    "oxfmt": "^0.56.0",
     "oxlint": "^1.71.0",
     "oxlint-tsgolint": "^0.23.0",
     "ts-node": "^10.9.2",
