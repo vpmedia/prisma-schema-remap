@@ -76,6 +76,7 @@
     "unicorn/prefer-node-protocol": "off",
     "unicorn/prefer-top-level-await": "off",
     "unicorn/switch-case-braces": "off",
-    "unicorn/text-encoding-identifier-case": "off"
+    "unicorn/text-encoding-identifier-case": "off",
+    "unicorn/throw-new-error": "off"
   }
 }
