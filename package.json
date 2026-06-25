@@ -30,16 +30,16 @@
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",
-    "@types/node": "^25.9.3",
+    "@types/node": "^25.9.4",
     "@types/pluralize": "0.0.33",
-    "@vitest/coverage-v8": "^4.1.8",
-    "globals": "^17.6.0",
+    "@vitest/coverage-v8": "^4.1.9",
+    "globals": "^17.7.0",
     "oxfmt": "^0.54.0",
-    "oxlint": "^1.69.0",
+    "oxlint": "^1.71.0",
     "oxlint-tsgolint": "^0.23.0",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.8"
+    "vitest": "^4.1.9"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
