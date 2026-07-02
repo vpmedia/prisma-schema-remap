@@ -25,18 +25,18 @@
     "chalk": "^5.6.2",
     "change-case": "^5.4.4",
     "commander": "^15.0.0",
-    "js-yaml": "^5.2.0",
+    "js-yaml": "^5.2.1",
     "pluralize": "^8.0.0"
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",
-    "@types/node": "^26.0.1",
+    "@types/node": "^26.1.0",
     "@types/pluralize": "0.0.33",
     "@vitest/coverage-v8": "^4.1.9",
     "globals": "^17.7.0",
-    "oxfmt": "^0.56.0",
-    "oxlint": "^1.71.0",
-    "oxlint-tsgolint": "^0.23.0",
+    "oxfmt": "^0.57.0",
+    "oxlint": "^1.72.0",
+    "oxlint-tsgolint": "^0.24.0",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.3",
     "vitest": "^4.1.9"
