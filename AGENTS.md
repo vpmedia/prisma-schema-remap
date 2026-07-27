@@ -35,3 +35,9 @@ Read [package.json](package.json) for the language, runtime, dependencies and to
 - Tests live in `test/` as `*.test.ts`, with `__fixtures__/` and `__snapshots__/`
 - Run a single file: `pnpm test test/convention-transformer.test.ts`
 - Update snapshots: `pnpm test -u`
+
+## Reference Documentation
+
+Read on demand:
+
+- [clean-code.md](docs/agents/clean-code.md) — general clean-code guidelines: naming, functions, comments, error handling, classes, testing, and refactoring.
