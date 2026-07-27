@@ -6,15 +6,7 @@ CLI that rewrites case conventions across an entire `schema.prisma` (with option
 
 ## Tech Stack
 
-- **Language:** TypeScript (CommonJS, `"type": "commonjs"`)
-- **Runtime:** Node.js (CLI)
-- **Package Manager:** pnpm
-- **Runtime Dependencies:** `@prisma/internals`, `commander`, `change-case`, `pluralize`, `chalk`, `js-yaml`
-- **Build:** `tsc`
-- **Testing:** Vitest, @vitest/coverage-v8
-- **Lint/Format:** oxlint (+ `oxlint-tsgolint`), oxfmt
-- **Type Checking:** TypeScript
-- **Tooling:** ts-node, lefthook (git hooks), commitlint (conventional commits), bin entry `prisma-schema-remap`
+Read [package.json](package.json) for the language, runtime, dependencies and tooling.
 
 ## Documentation
 
@@ -31,16 +23,6 @@ CLI that rewrites case conventions across an entire `schema.prisma` (with option
 - **Run CLI locally:** `pnpm cli` (executes `bin/cli.js`)
 - **Test:** `pnpm test`
 - **Lint / Format / Typecheck:** `pnpm lint` / `pnpm format` / `pnpm typecheck`
-
-## Project Structure
-
-- `src/cli.ts` — CLI entry point
-- `src/schema.ts` — Prisma schema parsing/serialization
-- `src/convention-store.ts`, `src/convention-transformer.ts` — naming convention logic
-- `src/caseConventions.ts` — case-style helpers
-- `bin/cli.js` — runtime CLI shim
-- `test/` — Vitest suite (`*.test.ts`, `__fixtures__/`, `__snapshots__/`)
-- `dist/` — build output (gitignored)
 
 ## Conventions
 
