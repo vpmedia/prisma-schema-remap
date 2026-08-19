@@ -25,7 +25,7 @@
     "chalk": "^6.0.0",
     "change-case": "^5.4.4",
     "commander": "^15.0.0",
-    "js-yaml": "^5.2.3",
+    "js-yaml": "^5.3.0",
     "pluralize": "^8.0.0"
   },
   "devDependencies": {
@@ -33,9 +33,9 @@
     "@types/node": "^26.2.0",
     "@types/pluralize": "0.0.33",
     "@vitest/coverage-v8": "^4.1.10",
-    "globals": "^17.9.0",
-    "oxfmt": "^0.61.0",
-    "oxlint": "^1.77.0",
+    "globals": "^17.11.0",
+    "oxfmt": "^0.63.0",
+    "oxlint": "^1.78.0",
     "oxlint-tsgolint": "^7.0.2001",
     "ts-node": "^10.9.2",
     "typescript": "^7.0.2",
