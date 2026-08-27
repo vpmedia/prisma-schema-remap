@@ -45,6 +45,9 @@
     "onlyBuiltDependencies": [
       "@prisma/engines",
       "esbuild"
-    ]
+    ],
+    "overrides": {
+      "deepmerge-ts": ">=8.0.2"
+    }
   }
 }
