@@ -149,7 +149,7 @@ model User {
 "
 `;
 
-exports[`it can enforce a specified case convention on all fields of all tables ('camelCase') > camelCase 1`] = `
+exports[`it can enforce a specified case convention on all fields of all tables (camelCase) > camelCase 1`] = `
 "datasource db {
   provider = "sqlite"
   url      = "file:database.db"
@@ -167,7 +167,7 @@ model DemoIt {
 "
 `;
 
-exports[`it can enforce a specified case convention on all fields of all tables ('camelCase') > camelCase 2`] = `
+exports[`it can enforce a specified case convention on all fields of all tables (camelCase) > camelCase 2`] = `
 "datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -206,7 +206,7 @@ model FieldKey {
 "
 `;
 
-exports[`it can enforce a specified case convention on all fields of all tables ('camelCase') > camelCase 3`] = `
+exports[`it can enforce a specified case convention on all fields of all tables (camelCase) > camelCase 3`] = `
 "datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
@@ -247,7 +247,7 @@ model Business {
 "
 `;
 
-exports[`it can enforce a specified case convention on all fields of all tables ('pascalCase') > pascalCase 1`] = `
+exports[`it can enforce a specified case convention on all fields of all tables (pascalCase) > pascalCase 1`] = `
 "datasource db {
   provider = "sqlite"
   url      = "file:database.db"
@@ -265,7 +265,7 @@ model DemoIt {
 "
 `;
 
-exports[`it can enforce a specified case convention on all fields of all tables ('pascalCase') > pascalCase 2`] = `
+exports[`it can enforce a specified case convention on all fields of all tables (pascalCase) > pascalCase 2`] = `
 "datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -304,7 +304,7 @@ model FieldKey {
 "
 `;
 
-exports[`it can enforce a specified case convention on all fields of all tables ('pascalCase') > pascalCase 3`] = `
+exports[`it can enforce a specified case convention on all fields of all tables (pascalCase) > pascalCase 3`] = `
 "datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
@@ -345,7 +345,7 @@ model Business {
 "
 `;
 
-exports[`it can enforce a specified case convention on all fields of all tables ('snakeCase') > snakeCase 1`] = `
+exports[`it can enforce a specified case convention on all fields of all tables (snakeCase) > snakeCase 1`] = `
 "datasource db {
   provider = "sqlite"
   url      = "file:database.db"
@@ -363,7 +363,7 @@ model DemoIt {
 "
 `;
 
-exports[`it can enforce a specified case convention on all fields of all tables ('snakeCase') > snakeCase 2`] = `
+exports[`it can enforce a specified case convention on all fields of all tables (snakeCase) > snakeCase 2`] = `
 "datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -402,7 +402,7 @@ model FieldKey {
 "
 `;
 
-exports[`it can enforce a specified case convention on all fields of all tables ('snakeCase') > snakeCase 3`] = `
+exports[`it can enforce a specified case convention on all fields of all tables (snakeCase) > snakeCase 3`] = `
 "datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
@@ -443,7 +443,7 @@ model Business {
 "
 `;
 
-exports[`it can enforce a specified case convention on all table names ('camelCase') > camelCase 1`] = `
+exports[`it can enforce a specified case convention on all table names (camelCase) > camelCase 1`] = `
 "datasource db {
   provider = "sqlite"
   url      = "file:database.db"
@@ -463,7 +463,7 @@ model DemoIt {
 "
 `;
 
-exports[`it can enforce a specified case convention on all table names ('camelCase') > camelCase 2`] = `
+exports[`it can enforce a specified case convention on all table names (camelCase) > camelCase 2`] = `
 "datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -502,7 +502,7 @@ model FieldKey {
 "
 `;
 
-exports[`it can enforce a specified case convention on all table names ('camelCase') > camelCase 3`] = `
+exports[`it can enforce a specified case convention on all table names (camelCase) > camelCase 3`] = `
 "datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
@@ -544,7 +544,7 @@ model Business {
 "
 `;
 
-exports[`it can enforce a specified case convention on all table names ('pascalCase') > pascalCase 1`] = `
+exports[`it can enforce a specified case convention on all table names (pascalCase) > pascalCase 1`] = `
 "datasource db {
   provider = "sqlite"
   url      = "file:database.db"
@@ -562,7 +562,7 @@ model DemoIt {
 "
 `;
 
-exports[`it can enforce a specified case convention on all table names ('pascalCase') > pascalCase 2`] = `
+exports[`it can enforce a specified case convention on all table names (pascalCase) > pascalCase 2`] = `
 "datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -596,7 +596,7 @@ model FieldKey {
 "
 `;
 
-exports[`it can enforce a specified case convention on all table names ('pascalCase') > pascalCase 3`] = `
+exports[`it can enforce a specified case convention on all table names (pascalCase) > pascalCase 3`] = `
 "datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
@@ -637,7 +637,7 @@ model Business {
 "
 `;
 
-exports[`it can enforce a specified case convention on all table names ('snakeCase') > snakeCase 1`] = `
+exports[`it can enforce a specified case convention on all table names (snakeCase) > snakeCase 1`] = `
 "datasource db {
   provider = "sqlite"
   url      = "file:database.db"
@@ -657,7 +657,7 @@ model DemoIt {
 "
 `;
 
-exports[`it can enforce a specified case convention on all table names ('snakeCase') > snakeCase 2`] = `
+exports[`it can enforce a specified case convention on all table names (snakeCase) > snakeCase 2`] = `
 "datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -696,7 +696,7 @@ model FieldKey {
 "
 `;
 
-exports[`it can enforce a specified case convention on all table names ('snakeCase') > snakeCase 3`] = `
+exports[`it can enforce a specified case convention on all table names (snakeCase) > snakeCase 3`] = `
 "datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
