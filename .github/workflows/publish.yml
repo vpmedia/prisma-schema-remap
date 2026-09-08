@@ -24,7 +24,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # 7.0.1
         with:
           fetch-depth: 0
-      - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271  # 6.0.9
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413  # 6.1.0
         with:
           version: 10
           run_install: false
@@ -48,7 +48,7 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           pnpm version minor -m "chore(release): v%s"
       - name: Changelog
-        uses: orhun/git-cliff-action@f50e11560dce63f7c33227798f90b924471a88b5  # 4.8.0
+        uses: orhun/git-cliff-action@3d96a18cc4ec17e9dc69ddcc424ccafaf1f78ce2  # 4.9.0
         env:
           OUTPUT: CHANGELOG.md
       - name: Commit
