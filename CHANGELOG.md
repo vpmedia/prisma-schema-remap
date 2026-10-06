@@ -1,3 +1,43 @@
+## [1.7.0] - 2026-10-06
+
+### 🐛 Bug Fixes
+
+- *(lint)* Use default import for node:path
+- *(deps)* Override deepmerge-ts to a patched version
+- *(deps)* Take vite 8 and stop auto-installing optional peers
+
+### 💼 Other
+
+- *(deps)* Bump dependency versions
+- *(deps)* Bumped package versions
+- *(deps)* Bump dependency versions
+- *(deps)* Bump dependency versions
+- *(deps)* Bump dependency versions
+- *(deps)* Bump dependency versions
+- *(deps)* Bump dependency versions
+- *(deps)* Bump dependency versions
+- *(deps)* Bump dependency versions
+- *(deps)* Migrate to typescript 7
+- *(deps)* Bump dependency versions
+- *(deps)* Bump oxfmt to 0.59.0
+- *(deps)* Bump the github-actions group with 3 updates
+- *(deps)* Update dependencies
+- *(deps)* Update non-major dependencies
+- *(deps)* Update non-major dependencies
+
+### 📚 Documentation
+
+- Trim always-loaded agent context
+- Move always-loaded agent docs to on-demand loading
+
+### ⚙️ Miscellaneous Tasks
+
+- Release
+- Supress lint error
+- Pin GitHub Actions to commit SHAs and upgrade to latest
+- *(lint)* Disable rules newly enforced by oxlint 1.71
+- *(vscode)* Enable claude hooks in the workspace settings
+- *(release)* V1.7.0
 ## [1.6.0] - 2026-05-26
 
 ### 💼 Other
