@@ -29,7 +29,6 @@
     "pluralize": "^8.0.0"
   },
   "devDependencies": {
-    "@types/js-yaml": "^4.0.9",
     "@types/node": "^26.6.4",
     "@types/pluralize": "0.0.33",
     "@vitest/coverage-v8": "^5.0.3",
