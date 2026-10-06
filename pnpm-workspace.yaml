@@ -1,5 +1,4 @@
-onlyBuiltDependencies:
-  - esbuild
+autoInstallPeers: false
 
 minimumReleaseAge: 1440
 
